@@ -201,7 +201,11 @@ This low accuracy is expected and consistent with the literature.
 The original Word2Vec paper reports ~70% accuracy, but was trained on
 100 billion tokens, approximately 25,000x more data than Text8 (~4M tokens).
 
+One of the ideas that would lead to better results is using Top-5 metrics instead of Top-1, as well as increasing the number of epochs. Also, by reducing the parameter count by 50%, we achieved effectiveness in memory optimization and parameter reduction, but this can lead to a decrease in analogy accuracy because the model has less capacity to distinguish between the roles of center and context words. Additionally, SVD analysis suggests that the optimal number of dimensions is 40, so changing this could be another way to achieve better results.
 
+## Additional
+
+In the following repositories, [hallucionation_detecion](https://github.com/milica-tomic/hallucination_detection) and [test_time_reinforcement_learning](https://github.com/milica-tomic/test_time_reinforcement_learning), you can see some other modifications to the skip-gram with negative sampling implementation.
 
 ## References
 
