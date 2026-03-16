@@ -1,4 +1,4 @@
-# Learning to reason with small models
+# Learning to Reason with Small Models
 
 Implementation of the Word2Vec training loop from scratch using only NumPy with a focus on parameter efficiency and capacity analysis for small-scale language modeling. 
 
@@ -30,8 +30,6 @@ pip install numpy
 After you check that all libraries are installed, run the first cell in the code.
 
 The [Text8](https://mattmahoney.net/dc/text8.zip) and [Google Analogy](https://github.com/tmikolov/word2vec) datasets will download automatically during executon. 
-
-You may also download the w2v_model  to independently try and evaluate the model's performance.
 
 ## Model Architecture
 
@@ -171,18 +169,18 @@ k* is the recommended value for `DIM` in the next training run — it is the num
 
 ### 1. Nearest Neighbours
 
-Cosine similarity between a query vector and all vectors in `W_in`:
+Cosine similarity between a query vector and all vectors in `W_in` is used.
+The model was trained on approximately 4M tokens (after subsampling
+from the full 17M token Text8 corpus).
 
-```
-Nearest neighbours of 'king':
-  queen    0.78
-  prince   0.71
-  ...
-```
+| Query | Top neighbours |
+|---|---|
+| `king` | king, reign, childless, reigned, pretender, posthumus |
+| `paris` |montparnasse, cimeti, sur, seine, dans |
+| `computer` | computers, microcomputer, integrator, minicomputer, tms |
 
-Note that `vii` and `viii` appear due to frequent co-occurrence with
-  royal names (Henry VIII, Louis VII) in Wikipedia text — a direct
-  consequence of distributional semantics rather than explicit encoding.
+Despite training on a relatively small corpus, the model captures
+meaningful semantic clusters:
 
 ### 2. Analogy Accuracy
 
@@ -197,13 +195,12 @@ Accuracy = % of analogies where top-1 prediction matches the expected word.
 
 The benchmark used is the original Google word analogy dataset (Mikolov et al., 2013a), containing 19,544 analogies split into semantic categories (e.g. capital cities, currency) and syntactic categories (e.g. plural forms, verb tenses). Words absent from the vocabulary are skipped and counted separately.
 
-**Result: 1.4% accuracy (241/17,827 evaluated, 1,717 skipped)**
+**Result: 1.3% accuracy (235/17827 evaluated, 1,717 skipped)**
 
 This low accuracy is expected and consistent with the literature.
 The original Word2Vec paper reports ~70% accuracy, but was trained on
 100 billion tokens, approximately 25,000x more data than Text8 (~4M tokens).
 
-> **Note:** Accuracy is expected to be modest at `DIM=100` with 3 epochs on Text8. Larger dimension, more epochs, and untied weights improve this significantly.
 
 
 ## References
