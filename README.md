@@ -67,6 +67,8 @@ The model consists of two embedding matrices (both of shape `(V, D)`). Based on 
 For each center word $v_c$, predict its surrounding context words within a window.  
 The **dynamic window** $c \sim \text{Uniform}[1, \text{window}]$ gives closer words a higher effective weight.
 
+The difference comparing to the original paper is that, instead of pre-calculating every single word pair, a generator is implemented that yields batches as needed. This makes the training much more RAM-friendly, even with large corpora.
+
 ### Negative Sampling Loss (SGNS)
 
 Instead of a full softmax over the vocabulary, SGNS replaces the problem with $K$ binary classification tasks:
